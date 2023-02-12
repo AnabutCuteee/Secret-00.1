@@ -3731,6 +3731,7 @@ end)
 
 -- [ Mirage and Full Moon Check ]
 
+if World3 then
 local FullMoon = NelzkieSpecial:AddLabel("hi")
 local MirageCheck = NelzkieSpecial:AddLabel("hi")
 
@@ -3789,6 +3790,7 @@ spawn(function()
         end)
     end
 end)
+end
 
 -- [ Webhook ]
 if World3 then
