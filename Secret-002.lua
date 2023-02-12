@@ -4406,6 +4406,7 @@ InfoStatusElite:AddToggle("EliteHunterFunc1",{
 
 Toggles["EliteHunterFunc1"]:OnChanged(function(value)
     _G.Settings.Main["Auto Elite Hunter"] = value
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
     CancelTween(_G.Settings.Main["Auto Elite Hunter"])
     SaveSettings()
 end)
