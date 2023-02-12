@@ -4414,11 +4414,8 @@ spawn(function()
     while task.wait() do
         if _G.Settings.Main["Auto Elite Hunter"] then
             pcall(function()
-                if not string.find(GetQuestTitle.Text,Diablo) or string.find(GetQuestTitle.Text,Deandre) or string.find(GetQuestTitle.Text,Urban) then
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
-                end
-                if GetQuest.Visible == true then
-                    if string.find(GetQuestTitle.Text,Diablo) or string.find(GetQuestTitle.Text,Deandre) or string.find(GetQuestTitle.Text,Urban) then
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,"Diablo") or string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,"Deandre") or string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,"Urban") then
                         if game:GetService("Workspace").Enemies:FindFirstChild("Diablo [Lv. 1750]") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre [Lv. 1750]") or game:GetService("Workspace").Enemies:FindFirstChild("Urban [Lv. 1750]") then
                             for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
