@@ -16,13 +16,13 @@ repeat wait(1)
     pcall(function()
         if game:GetService("Players").LocalPlayer.PlayerGui.Main:FindFirstChild("ChooseTeam") then
             if game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Visible == true then
-                if getgenv().Team == "Pirates" then
+                if getgenv().Team == "Pirate" then
                     game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Size = UDim2.new(10000,1000,10000,1000)
                     game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.Position = UDim2.new(-4,0,-5,0)
                     wait(.1)
                     game:GetService("VirtualInputManager"):SendMouseButtonEvent(605,394,0,true,game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton,0)
                     game:GetService("VirtualInputManager"):SendMouseButtonEvent(605,394,0,false,game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton,0)
-                elseif getgenv().Team == "Marines" then
+                elseif getgenv().Team == "Marine" then
                     game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.Size = UDim2.new(10000,1000,10000,1000)
                     game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.Position = UDim2.new(-4,0,-5,0)
                     wait(.1)
@@ -252,7 +252,7 @@ end
 
 LoadSettings()
 
--- [ Place Id Check ]
+-- [ CheckQuest ]
 
 if game.PlaceId == 2753915549 then
     World1 = true
@@ -261,8 +261,6 @@ elseif game.PlaceId == 4442272183 then
 elseif game.PlaceId == 7449423635 then
     World3 = true
 end
-
--- [ Check Quest ]
 
 function CheckQuest()
     local MyLevel = game.Players.LocalPlayer.Data.Level.Value
@@ -1743,97 +1741,20 @@ end
 
 -- [ Tween Functions ]
 
-local function Tween(...)
-    local RealtargetPos = {...}
-    local targetPos = RealtargetPos[1]
-    local RealTarget
-    if type(targetPos) == "vector" then
-        RealTarget = CFrame.new(targetPos)
-    elseif type(targetPos) == "userdata" then
-        RealTarget = targetPos
-    elseif type(targetPos) == "number" then
-        RealTarget = CFrame.new(unpack(RealtargetPos))
-    end
-
-    if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health == 0 then if tween then tween:Cancel() end repeat wait() until game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health > 0; wait(0.2) end
-
-    local tweenfunc = {}
-    local Distance = (RealTarget.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).Magnitude
-    if Distance < 1000 then
-        Speed = 315
+function Tween(P1)
+    local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance < 250 then
+        Speed = 300
+    elseif Distance < 500 then
+        Speed = 300
+    elseif Distance < 1000 then
+        Speed = 300
     elseif Distance >= 1000 then
         Speed = 300
     end
-
-    local tween_s = game:service"TweenService"
-    local info = TweenInfo.new((RealTarget.Position - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).Magnitude/Speed, Enum.EasingStyle.Linear)
-    local tweenw, err = pcall(function()
-        tween = tween_s:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"], info, {CFrame = RealTarget})
-        tween:Play()
-    end)
-
-    function tweenfunc:Stop()
-        tween:Cancel()
-    end
-
-    function tweenfunc:Wait()
-        tween.Completed:Wait()
-    end
-
-    return tweenfunc
-end
-
-function Tween(CFgo)
-    if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Health <= 0 or not game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid") then tween:Cancel() repeat wait() until game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid") and game:GetService("Players").LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 wait(7) return end
-    if (game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - CFgo.Position).Magnitude <= 150 then
-        pcall(function()
-            tween:Cancel()
-
-            game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.CFrame = CFgo
-
-            return
-        end)
-    end
-    local tween_s = game:service"TweenService"
-    local info = TweenInfo.new((game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - CFgo.Position).Magnitude/325, Enum.EasingStyle.Linear)
-    tween = tween_s:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"], info, {CFrame = CFgo})
-    tween:Play()
-
-    local tweenfunc = {}
-
-    function tweenfunc:Stop()
-        tween:Cancel()
-    end
-
-    return tweenfunc
-end
-
-local function GetIsLand(...)
-    local RealtargetPos = {...}
-    local targetPos = RealtargetPos[1]
-    local RealTarget
-    if type(targetPos) == "vector" then
-        RealTarget = targetPos
-    elseif type(targetPos) == "userdata" then
-        RealTarget = targetPos.Position
-    elseif type(targetPos) == "number" then
-        RealTarget = CFrame.new(unpack(RealtargetPos))
-        RealTarget = RealTarget.p
-    end
-
-    local ReturnValue
-    local CheckInOut = math.huge;
-    if game.Players.LocalPlayer.Team then
-        for i,v in pairs(game.Workspace._WorldOrigin.PlayerSpawns:FindFirstChild(tostring(game.Players.LocalPlayer.Team)):GetChildren()) do
-            local ReMagnitude = (RealTarget - v:GetModelCFrame().p).Magnitude;
-            if ReMagnitude < CheckInOut then
-                CheckInOut = ReMagnitude;
-                ReturnValue = v.Name
-            end
-        end
-        if ReturnValue then
-            return ReturnValue
-        end
+    game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),{CFrame = P1}):Play()
+    if _G.StopTween then
+        game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),{CFrame = P1}):Cancel()
     end
 end
 
@@ -2095,7 +2016,7 @@ end)
 
 -- [ Server Hop Api ]
 
-local ServerHop = loadstring(game:HttpGet("https://raw.githubusercontent.com/xPeachyyBackup1/Secret-Backups/main/Secret-003.lua"))()
+local ServerHop = loadstring(game:HttpGet("https://raw.githubusercontent.com/AnabutCuteee/Secret-Backups/main/Secret-003.lua"))()
 
 -- [ Remove Text Fruits ] 
 
@@ -2797,7 +2718,7 @@ end)
 
 -- [ Code ]
 
-local CodeApi = loadstring(game:HttpGet("https://raw.githubusercontent.com/xPeachyyBackup1/Secret-Backups/main/Secret-001.lua"))()
+local CodeApi = loadstring(game:HttpGet("https://raw.githubusercontent.com/AnabutCuteee/Secret-Backups/main/Secret-001.lua"))()
 
 local Codess = SettingFarm:AddButton("Redeem x2 Codes",function()
     function RedeemCode(value)
@@ -3731,7 +3652,6 @@ end)
 
 -- [ Mirage and Full Moon Check ]
 
-if World3 then
 local FullMoon = NelzkieSpecial:AddLabel("hi")
 local MirageCheck = NelzkieSpecial:AddLabel("hi")
 
@@ -3790,7 +3710,6 @@ spawn(function()
         end)
     end
 end)
-end
 
 -- [ Webhook ]
 if World3 then
@@ -4495,8 +4414,11 @@ spawn(function()
     while task.wait() do
         if _G.Settings.Main["Auto Elite Hunter"] then
             pcall(function()
-                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,"Diablo") or string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,"Deandre") or string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,"Urban") then
+                if not string.find(GetQuestTitle.Text,Diablo) or string.find(GetQuestTitle.Text,Deandre) or string.find(GetQuestTitle.Text,Urban) then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                end
+                if GetQuest.Visible == true then
+                    if string.find(GetQuestTitle.Text,Diablo) or string.find(GetQuestTitle.Text,Deandre) or string.find(GetQuestTitle.Text,Urban) then
                         if game:GetService("Workspace").Enemies:FindFirstChild("Diablo [Lv. 1750]") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre [Lv. 1750]") or game:GetService("Workspace").Enemies:FindFirstChild("Urban [Lv. 1750]") then
                             for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                                 if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
@@ -4851,38 +4773,38 @@ spawn(function()
                         EquipTool("Holy Torch")
                     elseif game.Players.LocalPlayer.Character:FindFirstChild("Holy Torch") then
                         if game:GetService("Workspace").Map.Turtle.QuestTorches.Torch1.Particles.Main.Enabled ~= true then
-                            if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 300 then
+                            if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
                                 Tween(game:GetService("Workspace").Map.Turtle.QuestTorches.Torch1.Position,game:GetService("Workspace").Map.Turtle.QuestTorches.Torch1.CFrame)
-                            elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
-                                Tween(game.Workspace.Map.Turtle.QuestTorches.Torch1.CFrame)
+                            elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
+                                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.Turtle.QuestTorches.Torch1.CFrame
                             end
                         elseif game:GetService("Workspace").Map.Turtle.QuestTorches.Torch2.Particles.Main.Enabled ~= true then
-                            if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch2.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 300 then
+                            if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch2.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
                                 Tween(game:GetService("Workspace").Map.Turtle.QuestTorches.Torch2.Position,game:GetService("Workspace").Map.Turtle.QuestTorches.Torch2.CFrame)
-                            elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch2.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
-                                Tween(game.Workspace.Map.Turtle.QuestTorches.Torch2.CFrame)
+                            elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch2.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
+                                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.Turtle.QuestTorches.Torch2.CFrame
                             end
                         elseif game:GetService("Workspace").Map.Turtle.QuestTorches.Torch3.Particles.Main.Enabled ~= true then
-                            if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch3.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 300 then
+                            if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch3.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
                                 Tween(game:GetService("Workspace").Map.Turtle.QuestTorches.Torch3.Position,game:GetService("Workspace").Map.Turtle.QuestTorches.Torch3.CFrame)
-                            elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch3.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
-                                Tween(game.Workspace.Map.Turtle.QuestTorches.Torch3.CFrame)
+                            elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch3.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
+                                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.Turtle.QuestTorches.Torch3.CFrame
                             end
                         elseif game:GetService("Workspace").Map.Turtle.QuestTorches.Torch4.Particles.Main.Enabled ~= true then
-                            if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch4.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 300 then
+                            if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch4.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
                                 Tween(game:GetService("Workspace").Map.Turtle.QuestTorches.Torch4.Position,game:GetService("Workspace").Map.Turtle.QuestTorches.Torch4.CFrame)
-                            elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch4.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
-                                Tween(game.Workspace.Map.Turtle.QuestTorches.Torch4.CFrame)
+                            elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch4.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
+                                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.Turtle.QuestTorches.Torch4.CFrame
                             end
                         elseif game:GetService("Workspace").Map.Turtle.QuestTorches.Torch5.Particles.Main.Enabled ~= true then
-                            if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch5.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 300 then
+                            if (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch5.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude > 300 then
                                 Tween(game:GetService("Workspace").Map.Turtle.QuestTorches.Torch5.Position,game:GetService("Workspace").Map.Turtle.QuestTorches.Torch5.CFrame)
-                            elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch5.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 300 then
-                                Tween(game.Workspace.Map.Turtle.QuestTorches.Torch5.CFrame)
+                            elseif (game:GetService("Workspace").Map.Turtle.QuestTorches.Torch5.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= 300 then
+                                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.Turtle.QuestTorches.Torch5.CFrame
                             end
                         end
                     else
-                        Tween(game:GetService("Workspace").Map.Waterfall.SecretRoom.Room.Door.Door.Hitbox.CFrame)
+                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Map.Waterfall.SecretRoom.Room.Door.Door.Hitbox.CFrame
                     end
                 end
             end)
