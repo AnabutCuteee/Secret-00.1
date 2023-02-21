@@ -130,7 +130,7 @@ function Nofitication:Notify(nofdebug, middledebug, all)
         Uncheck.Size = UDim2.new(0, 18, 0, 18)
         Uncheck.ZIndex = 5
         Uncheck.AutoButtonColor = false
-        Uncheck.Image = "http://www.roblox.com/asset/?id=6031094678"
+        Uncheck.Image = ""
         Uncheck.ImageColor3 = Color3.fromRGB(255, 84, 84)
         
         Check.Name = "Check"
@@ -142,7 +142,7 @@ function Nofitication:Notify(nofdebug, middledebug, all)
         Check.Size = UDim2.new(0, 18, 0, 18)
         Check.ZIndex = 5
         Check.AutoButtonColor = false
-        Check.Image = "http://www.roblox.com/asset/?id=6031094667"
+        Check.Image = ""
         Check.ImageColor3 = Color3.fromRGB(83, 230, 50)
 
         local function ORBHB_fake_script()
