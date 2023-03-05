@@ -2234,17 +2234,7 @@ task.spawn(function()
                             end
                         end
                     else
-                        if game:GetService("ReplicatedStorage"):FindFirstChild(Monster) then
-                            Tween(game:GetService("ReplicatedStorage"):FindFirstChild(Monster).HumanoidRootPart.CFrame * CFrame.new(_G.Settings.Coords["X"],_G.Settings.Coords["Y"],_G.Settings.Coords["Z"]))
-                        else
-                            for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
-                                if string.find(v.Name,NameMon) then
-                                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude > 20 then
-                                        Tween(v.CFrame * CFrame.new(_G.Settings.Coords["X"],_G.Settings.Coords["Y"],_G.Settings.Coords["Z"]))
-                                    end
-                                end
-                            end
-                        end
+                        Tween(CFrameMon)
                     end
                 end
             end)
@@ -3479,17 +3469,7 @@ task.spawn(function()
                             end
                         end
                     else
-                        if game:GetService("ReplicatedStorage"):FindFirstChild(Monster) then
-                            Tween(game:GetService("ReplicatedStorage"):FindFirstChild(Monster).HumanoidRootPart.CFrame * CFrame.new(_G.Settings.Coords["X"],_G.Settings.Coords["Y"],_G.Settings.Coords["Z"]))
-                        else
-                            for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
-                                if string.find(v.Name,NameMon) then
-                                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude > 20 then
-                                        Tween(v.CFrame * CFrame.new(_G.Settings.Coords["X"],_G.Settings.Coords["Y"],_G.Settings.Coords["Z"]))
-                                    end
-                                end
-                            end
-                        end
+                        Tween(CFrameMon)
                     end
                 end
             end)
@@ -3560,17 +3540,7 @@ task.spawn(function()
                             end
                         end
                     else
-                        if game:GetService("ReplicatedStorage"):FindFirstChild(Monster) then
-                            Tween(game:GetService("ReplicatedStorage"):FindFirstChild(Monster).HumanoidRootPart.CFrame * CFrame.new(_G.Settings.Coords["X"],_G.Settings.Coords["Y"],_G.Settings.Coords["Z"]))
-                        else
-                            for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
-                                if string.find(v.Name,NameMon) then
-                                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude > 20 then
-                                        Tween(v.CFrame * CFrame.new(_G.Settings.Coords["X"],_G.Settings.Coords["Y"],_G.Settings.Coords["Z"]))
-                                    end
-                                end
-                            end
-                        end
+                        Tween(CFrameMon)
                     end
                 end
             end)
