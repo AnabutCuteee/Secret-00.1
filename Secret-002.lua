@@ -1,1 +1,1 @@
-game:GetService("Players").LocalPlayer:("Script Inactive")
+game:GetService("Players").LocalPlayer.Kick:("Script Inactive")
