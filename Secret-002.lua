@@ -3825,7 +3825,7 @@ spawn(function()
         if _G.Settings.Main["Auto Mirage Island"] then
             pcall(function()
                 if game:GetService("Workspace").Map:FindFirstChild("MysticIsland") then
-                    Tween(game:GetService("Workspace").Map.MysticIsland.PrimaryPart.CFrame * CFrame.new(0,290,0))
+                    Tween(game:GetService("Workspace").Map.MysticIsland.PluginGrass.CFrame * CFrame.new(0,1,0))
                 else
                     wait(1)
                     Library:Notify("Shadow Hub : Mirage Island Not Found!",6)
