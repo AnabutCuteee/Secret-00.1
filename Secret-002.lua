@@ -1,4 +1,4 @@
-repeat wait() until game:IsLoaded()
+frepeat wait() until game:IsLoaded()
 repeat wait() until game:GetService("Players")
 repeat wait() until game:GetService("Players").LocalPlayer
 repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui
@@ -3654,7 +3654,7 @@ local ObservationRange = ObservationSection:AddLabel("")
 spawn(function()
     while task.wait() do
         pcall(function()
-            ObservationRange:SetText("Ken Range Lv. : "..tostring(math.round(game.Players.LocalPlayer.VisionRadius.value)).."/5000")
+            ObservationRange:SetText("Ken Range Lv. : "..tostring(math.round(game.Players.LocalPlayer.VisionRadius.value)).."/3000")
         end)
     end
 end)
@@ -7634,9 +7634,9 @@ Toggles["AimPlayer"]:OnChanged(function(value)
 end)
 
 Players1:AddToggle("Lock3P",{
-    Text = "Lock Camera [Selected Player]",
+    Text = "Aim Lock Players",
     Default = _G.Settings.Players["Lock Player Aimbot"],
-    Tooltip = "Lock Player for [Aimbot] (Right Click to Lock Camera)",
+    Tooltip = "Lock Player (Right Click to Lock Camera)",
 })
 
 Toggles["Lock3P"]:OnChanged(function(value)
