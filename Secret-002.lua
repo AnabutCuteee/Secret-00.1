@@ -7270,6 +7270,8 @@ spawn(function()
                         repeat task.wait()
                             v:BreakJoints()
                             v.Humanoid.Health = 0
+                            v.HumanoidRootPart.CanCollide = false
+                            v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                         until not _G.Settings.Raid["Auto Kill Aura"] or not v.Parent or v.Humanoid.Health <= 0
                     end
                 end
